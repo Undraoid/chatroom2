@@ -3,7 +3,7 @@ const socket = require("socket.io");
 const app = express();
 
 
-const server = app.listen(22, () => {
+const server = app.listen(80, () => {
     console.log("listening to request on port 4000");
 })
 
