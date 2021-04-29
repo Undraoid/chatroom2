@@ -1,4 +1,4 @@
-let socket = io.connect("http://localhost:80");
+let socket = io.connect("http://77.68.112.113/");
 const date = new Date();
 const profile = [
   "https://www.w3schools.com/w3images/avatar2.png",
