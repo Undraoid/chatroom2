@@ -21,6 +21,7 @@ document.getElementById("app").innerHTML = `
 <div class="input-data">
 <input type="text" id="text" placeholder="Type Comment" size="50">
 <button class="send-btn"><img src="https://static.thenounproject.com/png/1054386-200.png" alt="send-btn"></button>
+<button class="send-voice"><img src="https://p.kindpng.com/picc/s/160-1602515_microphone-voice-interface-symbol-microphone-symbol-png-transparent.png" height="50px" width="50px"></button>
 </div>
 </div>`;
 
@@ -52,6 +53,12 @@ document.querySelector("input").addEventListener("keyup", (event) => {
       nickName: username
     })
   }
+
+  document.querySelector(".send-voice").addEventListener("click", () => {
+    socket.emit("message", {
+      handle: username
+    })
+  })
 
   socket.on("unsubscribe",person => {
     console.log("user leaving");
@@ -107,4 +114,36 @@ document.querySelector("input").addEventListener("keyup", (event) => {
        container.appendChild(timeDisplay);
        window.scrollTo(0,document.body.scrollHeight);
       }
+  })
+
+  socket.on("message", voice => {
+    const audio = document.createElement("div");
+    audio.className = "audio";
+    audio.id = "audio";
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.innerHTML = `
+    var device = navigator.mediaDevices.getUserMedia({audio: true});
+    var items = [];
+    device.then(stream => {
+      var recorder = new MediaRecorder(stream);
+      recorder.ondataavailable = e => {
+        items.push(e.data)
+        if (recorder.state == "inactive") 
+        {
+          var blob = new Blob(items, {type: "audio/webm"});
+          var audio = document.getElementById("audio");
+          var mainaudio = document.createElement("audio");
+          mainaudio.setAttribute("controls", "controls");
+          audio.appendChild(mainaudio);
+          mainaudio.innerHTML = "<source src="'+URL.createObjectURL(blob)+ '"
+            type="video/webm"/>;
+        }
+      }
+      recorder.start(100);
+      setTimeout(() => {
+        recorder.stop();
+      }, 5000);
+    })
+    `
   })
