@@ -3,7 +3,7 @@ const socket = require("socket.io");
 const app = express();
 
 
-const server = app.listen(22, () => {
+const server = app.listen(80, () => {
     console.log("listening to request on port 4000");
 })
 
@@ -26,6 +26,10 @@ io.on("connection", (socket) => {
     socket.on("add_user", user => {
         console.log("user logged");
         io.emit("add_user",user);
+    })
+
+    socket.on("message", voice => {
+        console.log("user sends voice recording");
     })
 
 })
