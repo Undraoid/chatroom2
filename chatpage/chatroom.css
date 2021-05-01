@@ -133,6 +133,29 @@ padding: 0 15px;
   height: 100%;
 }
 
+.send-voice {
+  width: 60px;
+  height: 50px;
+  outline: none;
+  border-radius: 50px;
+  border-color: transparent;
+  background-color: transparent;
+  overflow: hidden;
+  position: relative;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+}
+
+.send-voice:active {
+  transform: scale(0.85);
+}
+
+.send-voice img {
+  width: 100%;
+  height: 100%;
+}
+
 #new {
   float: left;
 }
@@ -198,4 +221,5 @@ button:focus {
   float: left;
   color: #999;
 }
+
 
